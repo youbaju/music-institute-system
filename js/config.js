@@ -1,24 +1,17 @@
 // ============================================================
 // إعدادات النظام العامة
 // ============================================================
-// هذا الملف يحدد "مصدر البيانات" فقط (محلي تجريبي / Firebase حقيقي).
-// أما إعدادات المعهد نفسه (الآلات، الأسعار، أيام العمل) فهي ليست هنا إطلاقاً —
-// يتم تخزينها كبيانات (document) داخل المستودع (Repository) وتُعدَّل من
-// لوحة التحكم فقط، حتى لا تكون هناك أي قيم ثابتة (Hardcoded) بالكود.
 
 export const APP_CONFIG = {
-  // اسم مصدر البيانات: "local" (تجريبي - localStorage) أو "firebase"
-  dataSource: "local",
+  // تم التفعيل: النظام الآن يعمل على Firebase الحقيقي
+  dataSource: "firebase",
 
-  // إعدادات Firebase (تُملأ لاحقاً بعد إنشاء مشروع حقيقي)
-  // بمجرد تعبئتها وتغيير dataSource إلى "firebase" يعمل كامل النظام
-  // على Firestore دون أي تعديل آخر في الكود.
   firebase: {
-    apiKey: "",
-    authDomain: "",
-    projectId: "",
-    storageBucket: "",
-    messagingSenderId: "",
-    appId: "",
+    apiKey: "AIzaSyAAkFj-YrCk8B4eSPUDzOmlVj9aDEQitao",
+    authDomain: "music-institute-92635.firebaseapp.com",
+    projectId: "music-institute-92635",
+    storageBucket: "music-institute-92635.firebasestorage.app",
+    messagingSenderId: "711928546331",
+    appId: "1:711928546331:web:89c5d7dd3a62053737e4be",
   },
 };
