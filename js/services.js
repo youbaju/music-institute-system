@@ -1,9 +1,3 @@
-// ============================================================
-// طبقة الخدمات (Services)
-// ============================================================
-// تحتوي منطق العمل (Business Logic) وتستخدم getRepository فقط،
-// ولا تعرف شيئاً عن مصدر البيانات الفعلي (محلي أو Firebase).
-
 import { getRepository } from "./repository/index.js";
 
 const repos = {
@@ -18,8 +12,30 @@ const repos = {
 };
 
 // ---------- الإعدادات ----------
+const DEFAULT_SETTINGS = {
+  id: "general",
+  instituteName: "معهد الأنغام الموسيقي",
+  currency: "ر.س",
+  workDays: ["الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس"],
+  workHoursFrom: "16:00",
+  workHoursTo: "21:00",
+  billingModel: "monthly",
+  instruments: [
+    { id: "oud", name: "عود", monthlyFee: 350 },
+    { id: "piano", name: "بيانو", monthlyFee: 400 },
+    { id: "organ", name: "أورغ", monthlyFee: 300 },
+    { id: "violin", name: "كمان", monthlyFee: 380 },
+    { id: "qanun", name: "قانون", monthlyFee: 420 },
+  ],
+};
+
 export async function getSettings() {
-  return repos.settings.getSingleton("general");
+  const settings = await repos.settings.getSingleton("general");
+  if (!settings) {
+    await repos.settings.setSingleton("general", DEFAULT_SETTINGS);
+    return DEFAULT_SETTINGS;
+  }
+  return { ...DEFAULT_SETTINGS, ...settings };
 }
 export async function updateSettings(partial) {
   return repos.settings.setSingleton("general", partial);
