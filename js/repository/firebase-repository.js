@@ -1,14 +1,6 @@
-// ============================================================
-// FirebaseRepository
-// ============================================================
-// نفس واجهة LocalRepository تماماً (list, get, add, update, remove,
-// getSingleton, setSingleton) لكن متصلة بـ Firestore الحقيقي.
-// بمجرد تعبئة APP_CONFIG.firebase وتغيير dataSource إلى "firebase"
-// في js/config.js، يتحول كامل التطبيق للعمل عليها دون أي تعديل آخر.
-
 import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import {
-  getFirestore,
+  initializeFirestore,
   collection,
   doc,
   getDoc,
@@ -28,7 +20,11 @@ function ensureInit() {
     app = initializeApp(APP_CONFIG.firebase);
   }
   if (!db) {
-    db = getFirestore(app);
+    // نفعّل Long Polling دائماً لتجاوز حظر بعض الشبكات/برامج الحماية
+    // لاتصال Firestore المباشر (WebSocket)، وهذا لا يؤثر على الأداء
+    db = initializeFirestore(app, {
+      experimentalForceLongPolling: true,
+    });
   }
   return db;
 }
