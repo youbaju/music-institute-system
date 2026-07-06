@@ -39,13 +39,7 @@ function openModal(title, bodyHtml, onSubmit, submitLabel = "حفظ") {
     const formData = Object.fromEntries(new FormData(e.target).entries());
     await onSubmit(formData);
     close();
-    // تحديث اسم المعهد بالقائمة الجانبية فوراً عند فتح الصفحة (بغض النظر عن التبويب الحالي)
-svc.getSettings().then((s) => {
-  document.getElementById("brandName").textContent = s.instituteName;
-});
-
-// أول تحميل
-renderCurrentView();
+    renderCurrentView();
   });
 }
 
@@ -325,6 +319,11 @@ document.getElementById("btnAddInstrument").addEventListener("click", () => {
     await svc.updateSettings({ instruments: [...settings.instruments, { id, name: data.name, monthlyFee: Number(data.monthlyFee) }] });
   }, "إضافة");
   currentView = "settings";
+});
+
+// تحديث اسم المعهد بالقائمة الجانبية فوراً عند فتح الصفحة (بغض النظر عن التبويب الحالي)
+svc.getSettings().then((s) => {
+  document.getElementById("brandName").textContent = s.instituteName;
 });
 
 // أول تحميل
