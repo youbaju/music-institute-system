@@ -39,7 +39,13 @@ function openModal(title, bodyHtml, onSubmit, submitLabel = "حفظ") {
     const formData = Object.fromEntries(new FormData(e.target).entries());
     await onSubmit(formData);
     close();
-    renderCurrentView();
+    // تحديث اسم المعهد بالقائمة الجانبية فوراً عند فتح الصفحة (بغض النظر عن التبويب الحالي)
+svc.getSettings().then((s) => {
+  document.getElementById("brandName").textContent = s.instituteName;
+});
+
+// أول تحميل
+renderCurrentView();
   });
 }
 
