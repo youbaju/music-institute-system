@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>معهد الأنغام الموسيقي — الدخول</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="login-page">
+  <div class="login-card">
+    <svg class="rosette" style="margin:0 auto;" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="50" cy="50" r="46" stroke="#c89b3c" stroke-width="1.5"/>
+      <circle cx="50" cy="50" r="34" stroke="#c89b3c" stroke-width="1"/>
+      <g stroke="#c89b3c" stroke-width="1">
+        <path d="M50 4 L50 96"/><path d="M4 50 L96 50"/>
+        <path d="M18 18 L82 82"/><path d="M82 18 L18 82"/>
+      </g>
+      <circle cx="50" cy="50" r="6" fill="#c89b3c"/>
+    </svg>
+    <h1 id="instituteName">معهد الأنغام الموسيقي</h1>
+    <p class="sub">نظام إدارة المعهد — نموذج أولي للعرض</p>
+
+    <div class="role-options" id="roleOptions">
+      <button class="role-btn" id="btnAdmin">
+        <span class="icon">🗝️</span>
+        <span><strong>الإدارة / الموظفين</strong><span>تسجيل الطلاب، الجدولة، المدفوعات، التقارير</span></span>
+      </button>
+      <button class="role-btn" id="btnStudent">
+        <span class="icon">🎻</span>
+        <span><strong>طالب / ولي أمر</strong><span>عرض الجدول، الحضور، الفواتير</span></span>
+      </button>
+    </div>
+
+    <div class="student-select" id="studentSelectWrap">
+      <div class="field" style="text-align:right; margin-top:16px;">
+        <label>اختر الطالب (لأغراض العرض التجريبي)</label>
+        <select id="studentSelect"></select>
+      </div>
+      <button class="btn-primary" id="btnEnterStudent" style="width:100%; margin-top:6px;">دخول</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+  import { login } from "./js/auth.js";
+  import { listStudents, getSettings } from "./js/services.js";
+
+  getSettings().then(s => {
+    document.getElementById("instituteName").textContent = s.instituteName;
+  });
+
+  document.getElementById("btnAdmin").addEventListener("click", () => {
+    login("admin");
+    window.location.href = "admin.html";
+  });
+
+  document.getElementById("btnStudent").addEventListener("click", async () => {
+    const students = await listStudents();
+    const select = document.getElementById("studentSelect");
+    select.innerHTML = students.map(s => `<option value="${s.id}">${s.name} — ${s.instrumentName}</option>`).join("");
+    document.getElementById("studentSelectWrap").classList.add("visible");
+  });
+
+  document.getElementById("btnEnterStudent").addEventListener("click", () => {
+    const studentId = document.getElementById("studentSelect").value;
+    login("student", studentId);
+    window.location.href = "student.html";
+  });
+</script>
+</body>
+</html>

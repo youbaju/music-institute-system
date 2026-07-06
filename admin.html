@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحة الإدارة — معهد الأنغام الموسيقي</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <svg class="rosette" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:26px;height:26px;">
+        <circle cx="50" cy="50" r="46" stroke="#c89b3c" stroke-width="2"/>
+        <circle cx="50" cy="50" r="6" fill="#c89b3c"/>
+      </svg>
+      <div>
+        <h2 id="brandName">معهد الأنغام</h2>
+        <span>لوحة الإدارة</span>
+      </div>
+    </div>
+    <button class="nav-item active" data-view="dashboard">📊 لوحة المعلومات</button>
+    <button class="nav-item" data-view="students">🎓 الطلاب</button>
+    <button class="nav-item" data-view="teachers">👨‍🏫 المعلمون</button>
+    <button class="nav-item" data-view="schedule">🗓️ الجدولة</button>
+    <button class="nav-item" data-view="attendance">✅ الحضور والغياب</button>
+    <button class="nav-item" data-view="invoices">💳 الفواتير والمدفوعات</button>
+    <button class="nav-item" data-view="settings">⚙️ الإعدادات</button>
+    <div class="sidebar-footer">
+      <button class="btn-secondary btn-sm" style="width:100%;" id="btnLogout">تسجيل الخروج</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <h1 id="viewTitle">لوحة المعلومات</h1>
+      <span class="role-tag">إدارة</span>
+    </div>
+
+    <!-- لوحة المعلومات -->
+    <section class="view active" id="view-dashboard">
+      <div class="stat-grid" id="statGrid"></div>
+      <div class="card">
+        <div class="card-head"><h3>فواتير متأخرة عن الدفع</h3></div>
+        <div id="overdueTable"></div>
+      </div>
+    </section>
+
+    <!-- الطلاب -->
+    <section class="view" id="view-students">
+      <div class="toolbar">
+        <button class="btn-primary" id="btnAddStudent">+ إضافة طالب</button>
+      </div>
+      <div class="card"><div id="studentsTable"></div></div>
+    </section>
+
+    <!-- المعلمون -->
+    <section class="view" id="view-teachers">
+      <div class="toolbar">
+        <button class="btn-primary" id="btnAddTeacher">+ إضافة معلم</button>
+      </div>
+      <div class="card"><div id="teachersTable"></div></div>
+    </section>
+
+    <!-- الجدولة -->
+    <section class="view" id="view-schedule">
+      <div class="toolbar">
+        <button class="btn-primary" id="btnAddClass">+ إضافة حصة</button>
+      </div>
+      <div class="card"><div class="schedule-grid" id="scheduleGrid"></div></div>
+    </section>
+
+    <!-- الحضور -->
+    <section class="view" id="view-attendance">
+      <div class="card">
+        <div class="card-head"><h3>تسجيل الحضور حسب الحصة والتاريخ</h3></div>
+        <div class="toolbar">
+          <select id="attClassSelect"></select>
+          <input type="date" id="attDate">
+          <button class="btn-secondary btn-sm" id="btnLoadAttendance">تحميل</button>
+        </div>
+        <div id="attendanceArea"></div>
+      </div>
+    </section>
+
+    <!-- الفواتير -->
+    <section class="view" id="view-invoices">
+      <div class="toolbar">
+        <button class="btn-primary" id="btnAddInvoice">+ إصدار فاتورة</button>
+      </div>
+      <div class="card"><div id="invoicesTable"></div></div>
+    </section>
+
+    <!-- الإعدادات -->
+    <section class="view" id="view-settings">
+      <div class="card">
+        <div class="card-head"><h3>الإعدادات العامة للمعهد</h3></div>
+        <div id="settingsForm"></div>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <h3>الآلات الموسيقية والرسوم الشهرية</h3>
+          <button class="btn-secondary btn-sm" id="btnAddInstrument">+ إضافة آلة</button>
+        </div>
+        <div id="instrumentsTable"></div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<div id="modalRoot"></div>
+
+<script type="module" src="js/admin.js"></script>
+</body>
+</html>
